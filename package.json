@@ -1,0 +1,13 @@
+{
+    "name": "reminder-bot",
+    "version": "1.0",
+    "description": "First Project",
+    "main": "bot.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "enryu",
+    "dependencies": {
+        "discord.js": "^12.3.1"
+    }
+}
