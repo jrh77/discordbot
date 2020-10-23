@@ -21,6 +21,10 @@ client.on('message', message => {
 		var formattedDate = `${month}-${day}-${year} `;
 
 		let tasks = {"Today\'s Date" : formattedDate};
+		var propertyName = args;
+		var propertyValue = "Not Done";
+		tasks[propertyName] = propertyValue;
+
 
 		message.channel.send(JSON.stringify(args + " has been added! Here are your tasks for today."));
 		message.channel.send(JSON.stringify(tasks));	
