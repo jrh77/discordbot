@@ -25,9 +25,29 @@ client.on('message', message => {
 		var propertyValue = "Not Done";
 		tasks[propertyName] = propertyValue;
 
-
 		message.channel.send(JSON.stringify(args + " has been added! Here are your tasks for today."));
 		message.channel.send(JSON.stringify(tasks));	
+		//	message.channel.send(JSON.stringify(args)); Doesn't save args, just sends current args
+	}
+	else if (command === 'addtest') {
+		var date = new Date();
+		var month = date.getMonth() + 1;
+		var day = date.getDate();
+		var year = date.getFullYear();
+		var formattedDate = `${month}-${day}-${year} `;
+
+		var taskList = new Array();
+		for (var key in taskList) {
+			if (args != taskList ) {
+				
+			}
+		}
+
+		var format = {formattedDate : taskList};
+		
+
+		message.channel.send(JSON.stringify(args + " has been added! Here are your tasks for today."));
+		message.channel.send(JSON.stringify(format));	
 		//	message.channel.send(JSON.stringify(args)); Doesn't save args, just sends current args
 	}
 	else if (command === 'show') {
