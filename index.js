@@ -37,10 +37,8 @@ client.on('message', message => {
 		var formattedDate = `${month}-${day}-${year} `;
 
 		var taskList = new Array();
-		for (var key in taskList) {
-			if (args != taskList ) {
-				
-			}
+		if (!(args in taskList)) {
+			taskList.push(args)
 		}
 
 		var format = {formattedDate : taskList};
