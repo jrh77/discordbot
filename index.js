@@ -13,12 +13,14 @@ client.on('message', message => {
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
 	const command = args.shift().toLowerCase();
 
+	var globalVariable;
+
 	if (command === 'add') {
 		var date = new Date();
 		var month = date.getMonth() + 1;
 		var day = date.getDate();
 		var year = date.getFullYear();
-		var formattedDate = `${month}-${day}-${year} `;
+		var formattedDate = `${month}-${day}-${year}`;
 
 		let tasks = {"Today\'s Date" : formattedDate};
 		var propertyName = args;
@@ -49,6 +51,40 @@ client.on('message', message => {
 		//	message.channel.send(JSON.stringify(args)); Doesn't save args, just sends current args
 	}
 	else if (command === 'show') {
+	}
+	else if (command === 'start' || command === 'end') {
+		var date = new Date();
+		var day = date.getDate();
+		var hour = date.getHours();
+		var minutes = date.getMinutes();
+		var seconds = date.getSeconds();
+		amPm = "AM";
+
+		if (hour > 12) {
+			hour = hour - 12;
+			amPm = "PM";
+		}
+		var startTime;
+		var endTime;
+		var timeDone;
+
+		if (command === 'start') {
+			var startTime = hour + ":" + minutes + " " + amPm;
+			message.channel.send("Clocking in at " + startTime);
+
+			startHourInMinutes = hour * 60;
+			startMinutesDone = startHourInMinutes + minutes;
+		}
+		if (command === 'end') {
+			var endTime = hour + ":" + minutes + " " + amPm;
+			message.channel.send("Clocking out at " + endTime);
+
+			endHourInMinutes = hour * 60;
+			endMinutesDone = endHourInMinutes + minutes;
+			
+			timeDone = endMinutesDone - startMinutesDone;
+			message.channel.send("This studying session lasted: " + timeDone + " minutes");
+		}
 	}
  
 	// other commands...
