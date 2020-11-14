@@ -1,10 +1,16 @@
+'use strict';
+
 const Discord = require('discord.js');
 const { prefix, token } = require('./config.json');
-
+const fs = require('fs');
 const client = new Discord.Client();
 
 client.once('ready', () => {
 	console.log('Ready!');
+
+	let reader = fs.readFileSync('log.json');
+	let data = JSON.parse(reader);
+	console.log(data);
 });
 
 client.on('message', message => {
@@ -14,6 +20,8 @@ client.on('message', message => {
 	const command = args.shift().toLowerCase();
 
 	var globalVariable;
+	var tasktest = [];
+
 
 	if (command === 'add') {
 		var date = new Date();
@@ -22,14 +30,29 @@ client.on('message', message => {
 		var year = date.getFullYear();
 		var formattedDate = `${month}-${day}-${year}`;
 
-		let tasks = {"Today\'s Date" : formattedDate};
-		var propertyName = args;
-		var propertyValue = "Not Done";
-		tasks[propertyName] = propertyValue;
+		let reader = fs.readFileSync('log.json');
+		let data = JSON.parse(reader);
 
-		message.channel.send(JSON.stringify(args + " has been added! Here are your tasks for today."));
-		message.channel.send(JSON.stringify(tasks));	
+		if (data.date != [] ) {
+			data["dailyLog"][theDate] = formattedDate;
+		}
+
+		fs.writeFile('log.json', JSON.stringify(data), 'utf-8', function(err) {
+			if (err) throw err
+			console.log('Done!')
+		})
+
+		message.channel.send(JSON.stringify(args + " has been added!"));
+		message.channel.send(JSON.stringify(data));
 		//	message.channel.send(JSON.stringify(args)); Doesn't save args, just sends current args
+	}
+	else if (command === 'clearLog') {
+		fs.writeFile('log.json', '{}', 'utf-8', function(err) {
+			if (err) throw err
+			console.log('Done!')
+		})
+
+		message.channel.send('')
 	}
 	else if (command === 'addtest') {
 		var date = new Date();
